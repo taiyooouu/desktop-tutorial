@@ -1,0 +1,23 @@
+function sendBedtimeNotification() {
+  var emailAddress = "csti22021@g.nihon-u.ac.jp"; // 通知を送るメールアドレス
+  var subject = "就寝時間です";
+  var body = "もう寝る準備を始めましょう。";
+
+  MailApp.sendEmail(emailAddress, subject, body);
+}
+
+
+function createTrigger() {
+  // すべての既存のトリガーを削除
+  var allTriggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < allTriggers.length; i++) {
+    ScriptApp.deleteTrigger(allTriggers[i]);
+  }
+
+  // 毎晩10時に実行されるトリガーを作成
+  ScriptApp.newTrigger('sendBedtimeNotification')
+           .timeBased()
+           .atHour(15)
+           .everyDays(1)
+           .create();
+}
